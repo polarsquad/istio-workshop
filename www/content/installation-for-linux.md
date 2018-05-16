@@ -62,12 +62,24 @@ Alternatively, you can follow Kubernetes' [guide on installing `kubectl`](https:
 ~ $ chmod +x ~/kubetools/docker-machine-driver-kvm2
 ```
 
-9. Launch Minikube.
+9. Launch Minikube with KVM2 driver and the extra configuration shown below.
 ```shell
-~ $ minikube start --vm-driver=kvm2
+~ $ minikube start --vm-driver=kvm2 \
+    --extra-config=controller-manager.cluster-signing-cert-file="/var/lib/localkube/certs/ca.crt" \
+    --extra-config=controller-manager.cluster-signing-key-file="/var/lib/localkube/certs/ca.key" \
+    --extra-config=apiserver.admission-control="NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota"
 ```
 
-10. Test Kubernetes
+10. Make sure you have [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) add-on enabled in Minikube.
+```shell
+~ $ minikube addons list | grep ingress
+- ingress: disabled
+~ $ minikube addons enable ingress
+~ $ minikube addons list | grep ingress
+- ingress: enabled
+```
+
+11. Test Kubernetes
 ```shell
 ~ $ kubectl get nodes
 NAME       STATUS    ROLES     AGE       VERSION
