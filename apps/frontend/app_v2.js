@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
 
-const response_text = `
-<html>
-  <title>Version 2</title>
+const version = '2';
+
+const response_text = `<html>
+  <title>Version ${version}</title>
 </html>
 <body style="background-color: green; font-size: 60px">
-  Version 2
+  Version ${version}
 </body>
 `;
 
@@ -15,7 +16,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/version', function(req, res) {
-    res.send('2');
+    res.send(version);
 });
 
 app.listen(5000, function() {
