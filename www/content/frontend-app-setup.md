@@ -5,6 +5,8 @@ weight: 31
 hideFromIndex: true
 ---
 
+Our first task is to build and deploy our example frontend app to Kubernetes.
+
 The directory `apps/frontend/` in the workshop Git repo contains the Node.JS source code for the app, Dockerfile to build the Docker image, and Kubernetes deployment configuration files.
 
 The app launches an HTTP server with two GET endpoints. The root endpoint (`/`) outputs a simple HTML page. The version endpoint (`/version`) outputs the app version.
