@@ -1,5 +1,5 @@
 ---
-title: Frontend app setup
+title: Frontend app on Kubernetes
 series: frontend-app
 weight: 31
 hideFromIndex: true
