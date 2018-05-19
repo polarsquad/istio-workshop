@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:v1
+        image: polarsquad/example-frontend:v1
         imagePullPolicy: IfNotPresent
         resources:
           requests:
@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:v2
+        image: polarsquad/example-frontend:v2
         imagePullPolicy: IfNotPresent
         resources:
           requests:

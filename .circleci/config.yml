@@ -1,0 +1,97 @@
+defaults: &defaults
+  docker:
+    - image: docker
+
+version: 2
+jobs:
+  site:build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: apk update && apk add make curl
+
+      - run: make setup
+      - run: make build
+
+  site:publish:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: apk update && apk add make curl git openssh
+
+      - add_ssh_keys:
+          fingerprints:
+            - "81:1b:7c:fe:1a:4c:22:e3:d1:3d:fe:8e:cb:c6:2d:c9"
+      - run:
+          name: Setup git
+          command: |
+            git config --global user.email "circleci@polarsquad.com"
+            git config --global user.name "CircleCI"
+            echo 'github.com,192.30.253.113 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> ~/.ssh/known_hosts
+      - run: make setup
+      - run: make publish
+
+  apps:build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: apk update && apk add make
+
+      - setup_remote_docker
+
+      - run:
+          name: Build images
+          command: |
+            cd apps/frontend
+            make all
+
+  apps:publish:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: apk update && apk add make
+
+      - setup_remote_docker
+
+      - run:
+          name: Login Docker hub
+          command: echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+
+      - run:
+          name: Publish images
+          command: |
+            cd apps/frontend
+            make publish
+
+workflows:
+  version: 2
+  site:
+    jobs:
+      - site:build:
+          filters:
+            branches:
+              ignore: /gh-pages/
+
+      - site:publish:
+          requires:
+            - site:build
+          filters:
+            branches:
+              ignore: /gh-pages/
+              only: /master/
+
+  apps:
+    jobs:
+      - apps:build:
+          filters:
+            branches:
+              ignore: /gh-pages/
+
+      - apps:publish:
+          context: DockerHub
+          requires:
+            - apps:build
+          filters:
+            branches:
+              ignore: /gh-pages/
+              only: /master/

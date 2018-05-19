@@ -1,4 +1,4 @@
-APP_NAME = frontend
+APP_NAME = polarsquad/example-frontend
 
 all: v1 v2
 
@@ -13,3 +13,7 @@ clean:
 	docker rmi $(APP_NAME):v2
 
 .PHONY: all clean v1 v2
+
+publish: v1 v2
+	docker push $(APP_NAME):v1
+	docker push $(APP_NAME):v2

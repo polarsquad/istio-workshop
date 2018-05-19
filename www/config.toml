@@ -1,4 +1,4 @@
-baseURL = "https://istio-workshop.github.io"
+baseURL = "https://polarsquad.github.io/istio-workshop/"
 languageCode = "en-us"
 title = "Istio Workshop"
 copyright = "Made with ❤️ by Polar Squad."
