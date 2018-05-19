@@ -7,10 +7,18 @@ setup:
 # Generate the static documentation
 build:
 	@./bin/hugo --source www
-.PHONY: static
+.PHONY: build
 
 serve:
-	@./bin/hugo server -w -s www
+	@./bin/hugo server --watch --source www
 .PHONY: serve
+
+publish: build
+	cd www/static
+	rm -rf .git
+	git init
+	git add -A
+	git commit -m 'update static site'
+	git push -f git@github.com:polarsquad/istio-workshop.git master:gh-pages
 
 .DEFAULT_GOAL := build
