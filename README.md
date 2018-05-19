@@ -1,7 +1,7 @@
 # istio-workshop
 This repository contains sources for Polar Squad [Istio]() workshop guide and material.
 
-View the guide from [https://istio-workshop.github.io]()
+View the guide from [https://polarsquad.github.io/istio-workshop]()
 
 ## Development
 

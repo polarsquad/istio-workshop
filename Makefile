@@ -14,11 +14,11 @@ serve:
 .PHONY: serve
 
 publish: build
-	cd www/static
-	rm -rf .git
-	git init
-	git add -A
-	git commit -m 'update static site'
-	git push -f git@github.com:polarsquad/istio-workshop.git master:gh-pages
+	cd www/public; \
+	rm -rf .git; \
+	git init; \
+	git add -A; \
+	git commit -m 'update static site'; \
+	git push -f git@github.com:polarsquad/istio-workshop.git master:gh-pages;
 
 .DEFAULT_GOAL := build
