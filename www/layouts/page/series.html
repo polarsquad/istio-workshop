@@ -5,14 +5,14 @@
 
 <h2>Table of Contents:</h2>
 <ul class="Menu" style="padding: 0px; position: inherit; margin: 15px 0 0px 20px;">
-	{{ range where .Site.Pages.ByWeight "Params.series" "installation" }}
+	{{ range where .Site.Pages.ByWeight "Params.series" .Params.seriesStart }}
 	<li class="item" style="padding: 0px">
 		<a href="#{{ .Title }}">{{ .Title }}</a>
 	</li>
 	{{ end }}
 </ul>
 
-{{ range where .Site.Pages.ByWeight "Params.series" "installation" }}
+{{ range where .Site.Pages.ByWeight "Params.series" .Params.seriesStart }}
 <div class="Page" id="{{ .Title }}">
 	<h1>
 		<a href="{{ .Permalink }}">{{ .Title }}</a>

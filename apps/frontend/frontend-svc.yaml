@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+  labels:
+    app: frontend
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+    name: http
+  selector:
+    app: frontend
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v1
+    spec:
+      containers:
+      - name: frontend
+        image: frontend:v1
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: 5000
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend-v2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v2
+    spec:
+      containers:
+      - name: frontend
+        image: frontend:v2
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: 5000

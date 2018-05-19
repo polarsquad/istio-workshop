@@ -2,7 +2,8 @@
 title: Installation
 weight: 20
 menu: true
-layout: installations
+seriesStart: installation
+layout: series
 ---
 
 We will run [Istio](https://istio.io) on top of [Kubernetes](https://kubernetes.io).
