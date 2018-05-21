@@ -44,8 +44,8 @@ jobs:
       - run:
           name: Build images
           command: |
-            cd apps/frontend
-            make all
+            (cd apps/frontend && make all)
+            (cd apps/backend && make all)
 
   apps:publish:
     <<: *defaults
@@ -62,8 +62,8 @@ jobs:
       - run:
           name: Publish images
           command: |
-            cd apps/frontend
-            make publish
+            (cd apps/frontend && make publish)
+            (cd apps/backend && make publish)
 
 workflows:
   version: 2
