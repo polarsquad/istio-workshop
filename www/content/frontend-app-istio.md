@@ -7,7 +7,7 @@ hideFromIndex: true
 
 Now that we have our app running on Kubernetes, we can finally get to playing around with Istio. Let's set up some basic traffic routing capabilities for the app.
 
-In Istio, we can set up rules for how to route traffic based on the destination service. This can be achieved with a `RouteRule` resource, which can be written in YAML format similar to other Kubernetes resources. Here's a rule that sends all traffic incoming to our frontend service to version 1 of the app.
+In Istio, we can set up rules for how to route traffic based on the destination service. This can be achieved with a `RouteRule` custom resource, which can be written in YAML format similar to other Kubernetes resources. Here's a rule that sends all traffic incoming to our frontend service to version 1 of the app.
 
 ```yaml
 apiVersion: config.istio.io/v1alpha2
@@ -22,10 +22,10 @@ spec:
       version: v1
 ```
 
-In the rule above, the destination service is selected based on the Kubernetes service name. The rule can be created using the `istioctl` tool:
+In the rule above, the destination service is selected based on the Kubernetes service name:
 
 ```shell
-workshop $ istioctl create -f apps/frontend/rules/default.yaml
+workshop $ kubectl create -f apps/frontend/rules/default.yaml
 ```
 
 ## Ingress

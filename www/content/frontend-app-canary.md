@@ -29,10 +29,10 @@ spec:
     weight: 10
 ```
 
-The traffic percentages (weights) are assigned to matching labels. The rule can be created using the `istioctl` tool:
+The traffic percentages (weights) are assigned to matching labels. Create the rule:
 
 ```shell
-workshop $ istioctl create -f apps/frontend/rules/canary.yaml
+workshop $ kubectl create -f apps/frontend/rules/canary.yaml
 ```
 
 Note that we didn't have to edit the previously created rule. Using the `precedence` field, we can set ordering for the routing rules.
@@ -69,13 +69,13 @@ The measured weight distribution will slightly vary per test, but overall it loo
 Tuning the routing rules on the fly is super easy! There are two ways to do it, both of which edit the `frontend-canary` routing rule we defined earlier. You can edit the rule on the server directly using `kubectl`:
 
 ```shell
-workshop $ kubectl edit routerule frontend-default
+workshop $ kubectl edit routerule frontend-canary
 ```
 
- Alternatively, edit the rule file (`apps/frontend/rules/canary.yaml`) and push the update using `istioctl`:
+ Alternatively, edit the rule file (`apps/frontend/rules/canary.yaml`) and update the rule:
 
  ```shell
- workshop $ istioctl replace apps/frontend/rules/canary.yaml
+ workshop $ kubectl apply -f apps/frontend/rules/canary.yaml
  ```
 
 Exercise: Change the weights to something else, and use the `version_percentage.sh` script to verify weight distribution. Note that the weights must add up to 100.
