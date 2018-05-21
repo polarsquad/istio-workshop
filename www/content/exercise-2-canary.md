@@ -1,8 +1,8 @@
 ---
-title: Canary deployment for the app
-series: frontend-app
-weight: 33
-hideFromIndex: true
+title: "Exercise 2: Canary deployment"
+weight: 32
+menu: true
+seriesStart: exercise-2
 ---
 
 Let's play around with the traffic routing rules to create canary deployments.
@@ -35,11 +35,11 @@ The traffic percentages (weights) are assigned to matching labels. Create the ru
 workshop $ kubectl create -f apps/frontend/rules/canary.yaml
 ```
 
-Note that we didn't have to edit the previously created rule. Using the `precedence` field, we can set ordering for the routing rules.
+> Note that we didn't have to edit the previously created rule. Using the `precedence` field, we can set ordering for the routing rules. First matching _RoutingRule_ will get applied.
 
 ## Let's test it
 
-Since we've already set up an ingress resource for our app, we can reuse the existing endpoint:
+Since we've already set up an _Ingress_ resource for our app, we can reuse the existing endpoint:
 
 ```shell
 workshop $ curl $ENDPOINT

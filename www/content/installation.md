@@ -1,5 +1,5 @@
 ---
-title: Installation
+title: Install Istio
 weight: 20
 menu: true
 seriesStart: installation
