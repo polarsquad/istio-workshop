@@ -24,9 +24,7 @@ workshop $ kubectl create -f apps/frontend/frontend-svc.yaml
 We can test the availability of the internal service using a temporary pod.
 
 ```shell
-workshop $ FRONTEND_ENDPOINT=$(kubectl get svc frontend-svc -o 'jsonpath={ .spec.clusterIP }')
-workshop $ kubectl run -it --rm --restart=Never curl-test-frontend --image=radial/busyboxplus:curl --env="FRONTEND_ENDPOINT=$FRONTEND_ENDPOINT"
-[ root@curl-test-frontend:/ ]$ curl $FRONTEND_ENDPOINT:5000
+workshop $ kubectl run -it --rm --restart=Never curl-test-frontend --image=radial/busyboxplus:curl curl http://frontend-svc:5000
 <html>
   <title>Version 2</title>
 </html>
@@ -35,4 +33,4 @@ workshop $ kubectl run -it --rm --restart=Never curl-test-frontend --image=radia
 </body>
 ```
 
-You might see a response with "Version 1" instead of "Version 2" as shown in the listing above. Don't worry, it's expected.
+You might see a response with "Version 1" instead of "Version 2" as shown in the listing above. Don't worry, it's expected because Service `selector` selects both versions.
