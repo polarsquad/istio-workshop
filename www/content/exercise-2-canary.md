@@ -1,8 +1,8 @@
 ---
-title: Canary deployment for the app
-series: frontend-app
-weight: 33
-hideFromIndex: true
+title: "Exercise 2: Canary deployment"
+weight: 32
+menu: true
+seriesStart: exercise-2
 ---
 
 Let's play around with the traffic routing rules to create canary deployments.
@@ -39,7 +39,7 @@ Note that we didn't have to edit the previously created rule. Using the `precede
 
 ## Let's test it
 
-Since we've already set up an ingress resource for our app, we can reuse the existing endpoint:
+Since we've already set up an Ingress resource for our app, we can reuse the existing endpoint:
 
 ```shell
 workshop $ curl $ENDPOINT

@@ -1,9 +1,11 @@
 ---
-title: Frontend app on Kubernetes
-series: frontend-app
-weight: 31
-hideFromIndex: true
+title: Deploy Application
+weight: 30
+menu: true
+seriesStart: exercise-2
 ---
+
+We'll demonstrate a simple, Node.JS based frontend app on top of Kubernetes with traffic routing handled by Istio.
 
 Our first task is to deploy our example frontend app to Kubernetes.
 

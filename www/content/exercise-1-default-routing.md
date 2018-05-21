@@ -1,8 +1,8 @@
 ---
-title: Basic traffic routing using Istio
-series: frontend-app
-weight: 32
-hideFromIndex: true
+title: "Exercise 1: Default routing"
+weight: 31
+menu: true
+seriesStart: exercise-1
 ---
 
 Now that we have our app running on Kubernetes, we can finally get to playing around with Istio. Let's set up some basic traffic routing capabilities for the app.
@@ -30,7 +30,7 @@ workshop $ kubectl create -f apps/frontend/rules/default.yaml
 
 ## Ingress
 
-Now that we have a routing rule defined, we can expose the service using an ingress resource. Here's an example ingress definition where all HTTP traffic with any path will be routed to the frontend service:
+Now that we have a routing rule defined, we can expose the service using an Ingress resource. Here's an example Ingress definition where all HTTP traffic with any path will be routed to the frontend service:
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -49,7 +49,7 @@ spec:
           servicePort: 5000
 ```
 
-Notice how we set the ingress resource to use Istio as the ingress class. This allows Istio to apply it's own routing rules for the traffic that arrives to the cluster. We can create the ingress using `kubectl`:
+Notice how we set the Ingress resource to use Istio as the ingress class. This allows Istio to apply it's own routing rules for the traffic that arrives to the cluster. We can create the ingress using `kubectl`:
 
 ```shell
 workshop $ kubectl create -f apps/frontend/frontend-ingress.yaml
