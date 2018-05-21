@@ -73,10 +73,10 @@ Alternatively, you can follow Kubernetes' [guide on installing `kubectl`](https:
 10. Make sure you have [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) add-on enabled in Minikube.
 ```shell
 ~ $ minikube addons list | grep ingress
-- ingress: disabled
+– ingress: disabled
 ~ $ minikube addons enable ingress
 ~ $ minikube addons list | grep ingress
-- ingress: enabled
+– ingress: enabled
 ```
 
 11. Test Kubernetes
