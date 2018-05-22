@@ -9,6 +9,8 @@ Let's play around with the traffic routing rules to create canary deployments.
 
 ## Weight-based routing
 
+![Default routing](/istio-workshop/img/canary-routing.png)
+
 Here's a rule where we route 90% of the traffic to version 1 and 10% of the traffic to version 2.
 
 ```yaml
