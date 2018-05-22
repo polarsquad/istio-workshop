@@ -4,38 +4,64 @@ const bodyParser = require('body-parser')
 
 // HTTP
 const app = express();
-app.use(bodyParser.json());
 
 // DB
 const db = new loki('loki.json');
 const stuff = db.addCollection('stuff');
 
+function getByTitle(title) {
+    return stuff.find({title: title})[0];
+}
+
+function upsert(title, text) {
+    const item = getByTitle(title);
+    if (item) {
+        stuff.findAndUpdate({title: title}, function(o) {
+            o.text = text;
+            return o;
+        });
+    } else {
+        stuff.insert({title: title, text: text});
+    }
+}
+
+function getTitles() {
+    return stuff.find().map((o) => o.title);
+}
+
+function itemToResponse(item) {
+    return {
+        title: item.title,
+        text: item.text
+    };
+}
+
 app.get('/', function(req, res) {
-    res.json(stuff.find());
+    res.json(getTitles());
 });
 
-app.get('/:key', function(req, res) {
-    const items = stuff.find({key: req.params.key});
-    if (items.length > 0) {
-        res.json(items);
+app.get('/:title', function(req, res) {
+    const item = getByTitle(req.params.title);
+    if (item) {
+        res.json(itemToResponse(item));
     } else {
         res.status(404);
         res.json({message: 'not found'})
     }
 });
 
-app.post('/:key', function(req, res) {
-    if (req.body.value) {
-        stuff.insert({key: req.params.key, value: req.body.value});
+app.post('/:title', bodyParser.text(), function(req, res) {
+    if (typeof req.body === 'string') {
+        upsert(req.params.title, req.body);
         res.json({message: 'success'});
     } else {
         res.status(400);
-        res.json({message: 'missing value'});
+        res.json({message: 'missing text'});
     }
 });
 
-app.listen(5000, function() {
-    console.log('Backend app listening on port 5000')
+app.listen(6000, function() {
+    console.log('Backend app listening on port 6000')
 });
 
 process.on('SIGINT', function() {

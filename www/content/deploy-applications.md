@@ -12,7 +12,7 @@ Our first task is to deploy our example applications to Kubernetes.
 
 The directory [apps/frontend/](https://github.com/polarsquad/istio-workshop/tree/master/apps/frontend) and [apps/backend/](https://github.com/polarsquad/istio-workshop/tree/master/apps/backend) in the workshop Git repo contains the Node.JS source code for the apps, Dockerfile to build the Docker images, and Kubernetes deployment configuration files. You can find pre-built images from [Polar Squad Docker Hub](https://hub.docker.com/r/polarsquad/example-frontend/).
 
-The frontend app launches an HTTP server with two GET endpoints. The root endpoint (`/`) outputs a simple HTML page. The version endpoint (`/version`) outputs the app version.
+The frontend app launches an HTTP server that lists notes stored in the backend app. The root endpoint (`/`) outputs a simple HTML form and a list of stored notes. The version endpoint (`/version`) outputs the app version.
 
 The frontend app source code is split into two versions: `app_v1.js` for version 1 and `app_v2.js` for version 2. We'll later run both versions of the app simultaneously to demonstrate Istio's traffic routing capabilities.
 
@@ -70,11 +70,15 @@ workshop $ ENDPOINT_HOST=$(kubectl get po -l istio=ingress -n istio-system -o 'j
 workshop $ ENDPOINT_PORT=$(kubectl get svc istio-ingress -n istio-system -o 'jsonpath={.spec.ports[0].nodePort}')
 workshop $ ENDPOINT="http://$ENDPOINT_HOST:$ENDPOINT_PORT"
 workshop $ curl $ENDPOINT
-<html>
-  <title>Version 1</title>
-</html>
-<body style="background-color: blue; color: white; font-size: 60px">
-  Version 1
+<html><title>Version 1</title></html>
+<body>
+<h1 style="background-color: blue; color: white">Version 1</h1>
+<ul></ul>
+<form action="/" method="post">
+Title:<br/> <input type="text" name="title" /><br />
+Text:<br/> <textarea name="text"></textarea><br />
+<input type="submit" value="Submit" />
+</form>
 </body>
 ```
 
