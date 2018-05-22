@@ -13,6 +13,7 @@ spec:
   selector:
     app: frontend
 ---
+
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -35,6 +36,7 @@ spec:
         ports:
         - containerPort: 5000
 ---
+
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:

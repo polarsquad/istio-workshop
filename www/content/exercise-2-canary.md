@@ -34,7 +34,7 @@ spec:
 The traffic percentages (weights) are assigned to matching labels. Create the rule:
 
 ```shell
-workshop $ kubectl create -f apps/frontend/rules/canary.yaml
+workshop $ kubectl create -f apps/frontend/kube/rules/canary.yaml
 ```
 
 > Note that we didn't have to edit the previously created rule. Using the `precedence` field, we can set ordering for the routing rules. First matching _RoutingRule_ will get applied.
@@ -74,10 +74,10 @@ Tuning the routing rules on the fly is super easy! There are two ways to do it, 
 workshop $ kubectl edit routerule frontend-canary
 ```
 
- Alternatively, edit the rule file (`apps/frontend/rules/canary.yaml`) and update the rule:
+ Alternatively, edit the rule file (`apps/frontend/kube/rules/canary.yaml`) and update the rule:
 
  ```shell
- workshop $ kubectl apply -f apps/frontend/rules/canary.yaml
+ workshop $ kubectl apply -f apps/frontend/kube/rules/canary.yaml
  ```
 
 Exercise: Change the weights to something else, and use the `version_percentage.sh` script to verify weight distribution. Note that the weights must add up to 100.
