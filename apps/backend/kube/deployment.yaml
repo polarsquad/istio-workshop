@@ -6,8 +6,8 @@ metadata:
     app: backend
 spec:
   ports:
-  - port: 5000
-    targetPort: 5000
+  - port: 6000
+    targetPort: 6000
     protocol: TCP
     name: http
   selector:
@@ -34,5 +34,5 @@ spec:
           requests:
             cpu: 100m
         ports:
-        - containerPort: 5000
+        - containerPort: 6000
 ---

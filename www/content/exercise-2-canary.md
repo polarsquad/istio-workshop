@@ -45,17 +45,21 @@ Since we've already set up an _Ingress_ resource for our app, we can reuse the e
 
 ```shell
 workshop $ curl $ENDPOINT
-<html>
-  <title>Version 1</title>
-</html>
-<body style="background-color: blue; color: white; font-size: 60px">
-  Version 1
+<html><title>Version 1</title></html>
+<body>
+<h1 style="background-color: blue; color: white">Version 1</h1>
+<ul></ul>
+<form action="/" method="post">
+Title:<br/> <input type="text" name="title" /><br />
+Text:<br/> <textarea name="text"></textarea><br />
+<input type="submit" value="Submit" />
+</form>
 </body>
 ```
 
 There's a chance you might see "Version 2" in the output instead of "Version 1" as shown above. If you repeatedly call the endpoint with `curl`, you'll see the output occasionally flip between the versions. You can also open the endpoint in your browser and refresh the page repeatedly for the same effect.
 
-To verify that the weight distribution works as expected, we can repeatedly call the endpoint and count the occurrences. The script `apps/frontend/version_percentage.sh` does all of this for you. Let's run it!
+To verify that the weight distribution works as expected, we can repeatedly call the version endpoint and count the occurrences. The script `apps/frontend/version_percentage.sh` does all of this for you. Let's run it!
 
 ```shell
 workshop $ ./apps/frontend/version_percentage.sh $ENDPOINT
@@ -74,10 +78,10 @@ Tuning the routing rules on the fly is super easy! There are two ways to do it, 
 workshop $ kubectl edit routerule frontend-canary
 ```
 
- Alternatively, edit the rule file (`apps/frontend/kube/rules/canary.yaml`) and update the rule:
+Alternatively, edit the rule file (`apps/frontend/kube/rules/canary.yaml`) and update the rule:
 
- ```shell
- workshop $ kubectl apply -f apps/frontend/kube/rules/canary.yaml
- ```
+```shell
+workshop $ kubectl apply -f apps/frontend/kube/rules/canary.yaml
+```
 
 Exercise: Change the weights to something else, and use the `version_percentage.sh` script to verify weight distribution. Note that the weights must add up to 100.

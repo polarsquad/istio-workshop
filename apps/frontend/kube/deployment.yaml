@@ -30,6 +30,9 @@ spec:
       - name: frontend
         image: polarsquad/example-frontend:v1
         imagePullPolicy: IfNotPresent
+        env:
+        - name: BACKEND_HOST
+          value: backend-svc
         resources:
           requests:
             cpu: 100m
@@ -53,6 +56,9 @@ spec:
       - name: frontend
         image: polarsquad/example-frontend:v2
         imagePullPolicy: IfNotPresent
+        env:
+        - name: BACKEND_HOST
+          value: backend-svc
         resources:
           requests:
             cpu: 100m

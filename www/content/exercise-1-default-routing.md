@@ -34,11 +34,15 @@ Now we should get constantly "Version 1" response:
 
 ```shell
 workshop $ curl $ENDPOINT
-<html>
-  <title>Version 1</title>
-</html>
-<body style="background-color: blue; color: white; font-size: 60px">
-  Version 1
+<html><title>Version 1</title></html>
+<body>
+<h1 style="background-color: blue; color: white">Version 1</h1>
+<ul></ul>
+<form action="/" method="post">
+Title:<br/> <input type="text" name="title" /><br />
+Text:<br/> <textarea name="text"></textarea><br />
+<input type="submit" value="Submit" />
+</form>
 </body>
 ```
 
