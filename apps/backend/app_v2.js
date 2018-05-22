@@ -9,6 +9,9 @@ const app = express();
 const db = new loki('loki.json');
 const stuff = db.addCollection('stuff');
 
+// Other
+const version = '2';
+
 function getByTitle(title) {
     return stuff.find({title: title})[0];
 }
@@ -58,6 +61,10 @@ app.post('/:title', bodyParser.text(), function(req, res) {
         res.status(400);
         res.json({message: 'missing text'});
     }
+});
+
+app.get('/version', function(req, res) {
+    res.send(version);
 });
 
 app.listen(6000, function() {

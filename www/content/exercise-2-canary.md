@@ -48,7 +48,7 @@ workshop $ curl $ENDPOINT
 <html><title>Version 1</title></html>
 <body>
 <h1 style="background-color: blue; color: white">Version 1</h1>
-<ul></ul>
+<ul><li><a href="/greetings">greetings</a></li></ul>
 <form action="/" method="post">
 Title:<br/> <input type="text" name="title" /><br />
 Text:<br/> <textarea name="text"></textarea><br />
