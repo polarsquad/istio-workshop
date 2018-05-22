@@ -86,4 +86,6 @@ NAME       STATUS    ROLES     AGE       VERSION
 minikube   Ready     master    53m       v1.10.0
 ```
 
-Awesome! You're now running Kubernetes on your Linux. Check the Istio installation guide next.
+Awesome! You're now running Kubernetes on your Linux.
+
+Next check the [Istio installation guide »]({{< ref "install-istio.md" >}})

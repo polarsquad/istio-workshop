@@ -44,4 +44,4 @@ workshop $ curl $ENDPOINT
 
 Perfect! We can now access our app through Istio! You can also open the URL in your web browser if you like.
 
-In next step we want to route part of the traffic into the new version, aka. "canary deployment".
+In next step we want to route part of the traffic into the new version, aka. [canary deployment »]({{< ref "exercise-2-canary.md" >}})

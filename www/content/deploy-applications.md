@@ -55,6 +55,8 @@ Notice how we set the _Ingress_ resource to use Istio as the ingress controller.
 
 ```shell
 workshop $ kubectl create -f apps/frontend/kube/ingress.yaml
+ingress "frontend-ing" created
+
 workshop $ kubectl get ingress
 NAME           HOSTS     ADDRESS   PORTS     AGE
 frontend-ing   *                   80        10s
@@ -80,3 +82,5 @@ You might see randomly a response with "Version 1" instead of "Version 2" as sho
 Don't worry, it's expected because _Service_ `selector` selects both versions.
 
 Later in the exercises we use the `$ENDPOINT` in our examples to access the service.
+
+To start controlling the traffic with Istio, first we want to implement the [default routing »]({{< ref "exercise-1-default-routing.md" >}})

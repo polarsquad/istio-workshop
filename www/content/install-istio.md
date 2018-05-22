@@ -36,9 +36,13 @@ istio-ca-86f55cc46f-f7r2g        1/1       Running   0          1m
 istio-ingress-5bb556fcbf-5gvsz   1/1       Running   0          1m
 istio-mixer-86f5df6997-5bw96     3/3       Running   0          1m
 istio-pilot-67d6ddbdf6-bpps4     2/2       Running   0          1m
+```
+```shell
 workshop $ kubectl -n istio-system get deployment -listio=sidecar-injector
 NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 istio-sidecar-injector   1         1         1            1           28m
+```
+```shell
 workshop $ kubectl get namespace -L istio-injection
 NAME           STATUS    AGE       ISTIO-INJECTION
 default        Active    33m       enabled
@@ -47,4 +51,4 @@ kube-public    Active    33m
 kube-system    Active    33m
 ```
 
-You're done! :slightly_smiling_face::+1:
+You're done! :slightly_smiling_face::+1: Next, [deploy applications »]({{< ref "deploy-applications.md" >}})
