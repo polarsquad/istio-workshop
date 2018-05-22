@@ -23,7 +23,7 @@ spec:
 ```
 
 ```shell
-workshop $ kubectl create -f apps/frontend/rules/default.yaml
+workshop $ kubectl create -f apps/frontend/kube/rules/default.yaml
 ```
 
 Now we should get constantly "Version 1" response:

@@ -17,10 +17,10 @@ The app source code is split into two versions: `app_v1.js` for version 1 and `a
 
 ## Deploying to Kubernetes
 
-The YAML file [apps/frontend/frontend-svc.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/frontend/frontend-svc.yaml) in the workshop Git repo contains the resource definitions for our example frontend service. It creates a _Deployment_ per app version, and exposes both deployments internally as a single _Service_. Use `kubectl` to create the _Deployments_ and the _Service_.
+The YAML file [apps/frontend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/frontend/kube/deployment.yaml) in the workshop Git repo contains the resource definitions for our example frontend service. It creates a _Deployment_ per app version, and exposes both deployments internally as a single _Service_. Use `kubectl` to create the _Deployments_ and the _Service_.
 
 ```shell
-workshop $ kubectl create -f apps/frontend/frontend-svc.yaml
+workshop $ kubectl create -f apps/frontend/kube/deployment.yaml
 ```
 
 We can test the availability of the internal service using a temporary pod.
@@ -62,7 +62,7 @@ spec:
 Notice how we set the _Ingress_ resource to use Istio as the ingress controller. This allows Istio to apply it's own routing rules for the traffic that arrives to the cluster. We can create the ingress using `kubectl`:
 
 ```shell
-workshop $ kubectl create -f apps/frontend/frontend-ingress.yaml
+workshop $ kubectl create -f apps/frontend/kube/ingress.yaml
 workshop $ kubectl get ingress
 NAME           HOSTS     ADDRESS   PORTS     AGE
 frontend-ing   *                   80        10s
