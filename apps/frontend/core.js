@@ -30,14 +30,28 @@ function start(version, siteColor) {
 
     function getNoteTitles(callback) {
         return request(
-            {method: 'GET', uri: backendUrl, json: true},
+            {
+                method: 'GET',
+                uri: backendUrl,
+                json: true,
+                headers: {
+                    'X-Client-Version': version
+                }
+            },
             callback
         );
     }
 
     function getNote(title, callback) {
         return request(
-            {method: 'GET', uri: `${backendUrl}/${title}`, json: true},
+            {
+                method: 'GET',
+                uri: `${backendUrl}/${title}`,
+                json: true,
+                headers: {
+                    'X-Client-Version': version
+                }
+            },
             callback
         );
     }
@@ -47,7 +61,10 @@ function start(version, siteColor) {
             {
                 method: 'POST',
                 uri: `${backendUrl}/${title}`,
-                headers: {'Content-Type': 'text/plain'},
+                headers: {
+                    'Content-Type': 'text/plain',
+                    'X-Client-Version': version
+                },
                 body: text
             },
             callback
