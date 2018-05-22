@@ -21,24 +21,14 @@ The frontend app source code is split into two versions: `app_v1.js` for version
 The YAML file [apps/frontend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/frontend/kube/deployment.yaml) and [apps/backend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/backend/kube/deployment.yaml) in the workshop Git repo contains the resource definitions for our example services. It creates a _Deployment_ per app and version, and exposes all deployments internally as a _Services_. Use `kubectl` to create the _Deployments_ and the _Services_.
 
 ```shell
-workshop $ kubectl create -f apps/frontend/kube/deployment.yaml
-workshop $ kubectl create -f apps/backend/kube/deployment.yaml
+workshop $ kubectl get deployment
+NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+backend-v1    1         1         1            1           1h
+frontend-v1   1         1         1            1           1d
+frontend-v2   1         1         1            1           1d
 ```
 
-We can test the availability of the internal service using a temporary pod.
-
-```shell
-workshop $ kubectl run -it --rm --restart=Never curl-test-frontend --image=radial/busyboxplus:curl curl http://frontend-svc:5000
-<html>
-  <title>Version 2</title>
-</html>
-<body style="background-color: green; font-size: 60px">
-  Version 2
-</body>
-```
-
-You might see randomly a response with "Version 1" instead of "Version 2" as shown in the listing above. 
-Don't worry, it's expected because _Service_ `selector` selects both versions
+Next let's add _Ingress_ so we can access it outside.
 
 ## Ingress
 
@@ -61,7 +51,7 @@ spec:
           servicePort: 5000
 ```
 
-Notice how we set the _Ingress_ resource to use Istio as the ingress controller. This allows Istio to apply it's own routing rules for the traffic that arrives to the cluster. We can create the ingress using `kubectl`:
+Notice how we set the _Ingress_ resource to use Istio as the ingress controller. This allows Istio to apply it's own routing rules for the traffic that arrives to the cluster. We can create the _Ingress_ using `kubectl`:
 
 ```shell
 workshop $ kubectl create -f apps/frontend/kube/ingress.yaml
@@ -85,5 +75,8 @@ workshop $ curl $ENDPOINT
   Version 1
 </body>
 ```
+
+You might see randomly a response with "Version 1" instead of "Version 2" as shown in the listing above. 
+Don't worry, it's expected because _Service_ `selector` selects both versions.
 
 Later in the exercises we use the `$ENDPOINT` in our examples to access the service.
