@@ -6,6 +6,7 @@ ENV VERSION ${version}
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY core.js core.js
 COPY app_v${VERSION}.js app.js
 
 RUN npm install
