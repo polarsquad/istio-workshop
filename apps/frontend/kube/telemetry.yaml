@@ -1,0 +1,67 @@
+# Configuration for a metric measuring bytes sent from a server
+# to a client
+apiVersion: "config.istio.io/v1alpha2"
+kind: metric
+metadata:
+  name: mongosentbytes
+  namespace: default
+spec:
+  value: connection.sent.bytes | 0 # uses a TCP-specific attribute
+  dimensions:
+    source_service: source.service | "unknown"
+    source_version: source.labels["version"] | "unknown"
+    destination_version: destination.labels["version"] | "unknown"
+  monitoredResourceType: '"UNSPECIFIED"'
+---
+# Configuration for a metric measuring bytes sent from a client
+# to a server
+apiVersion: "config.istio.io/v1alpha2"
+kind: metric
+metadata:
+  name: mongoreceivedbytes
+  namespace: default
+spec:
+  value: connection.received.bytes | 0 # uses a TCP-specific attribute
+  dimensions:
+    source_service: source.service | "unknown"
+    source_version: source.labels["version"] | "unknown"
+    destination_version: destination.labels["version"] | "unknown"
+  monitoredResourceType: '"UNSPECIFIED"'
+---
+# Configuration for a Prometheus handler
+apiVersion: "config.istio.io/v1alpha2"
+kind: prometheus
+metadata:
+  name: frontendhandler
+  namespace: default
+spec:
+  metrics:
+  - name: frontend_sent_bytes # Prometheus metric name
+    instance_name: frontendsentbytes.metric.default # Mixer instance name (fully-qualified)
+    kind: COUNTER
+    label_names:
+    - source_service
+    - source_version
+    - destination_version
+  - name: frontend_received_bytes # Prometheus metric name
+    instance_name: frontendreceivedbytes.metric.default # Mixer instance name (fully-qualified)
+    kind: COUNTER
+    label_names:
+    - source_service
+    - source_version
+    - destination_version
+---
+# Rule to send metric instances to a Prometheus handler
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: frontendprom
+  namespace: default
+spec:
+  match: context.protocol == "tcp"
+         && destination.service == "frontend-svc.default.svc.cluster.local"
+  actions:
+  - handler: frontendhandler.prometheus
+    instances:
+    - frontendreceivedbytes.metric
+    - frontendsentbytes.metric
