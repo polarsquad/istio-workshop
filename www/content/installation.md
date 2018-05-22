@@ -1,5 +1,5 @@
 ---
-title: Install Istio
+title: Install Kubernetes
 weight: 20
 menu: true
 seriesStart: installation

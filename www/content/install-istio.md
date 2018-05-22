@@ -1,8 +1,7 @@
 ---
 title: Install Istio
-series: installation
-hideFromIndex: true
-weight: 15
+weight: 25
+menu: true
 ---
 
 Once you have a Kubernetes cluster up and running, you can install istio by running our Istio installation script.
@@ -10,9 +9,13 @@ Once you have a Kubernetes cluster up and running, you can install istio by runn
 This script will perform the following steps:
 
 1. Fetches the Istio distribution for your operating system (Linux or MacOS)
+
 2. Unpacks Istio to the workshop directory.
+
 3. Installs [Istio core components](https://istio.io/docs/setup/kubernetes/quick-start.html) to your Kubernetes cluster.
+
 4. Installs [Istio sidecar injector](https://istio.io/docs/setup/kubernetes/sidecar-injection.html#automatic-sidecar-injection) to your Kubernetes cluster.
+
 5. Makes the pods in the default namespace to use the sidecar injector for the pods by default. 
 
 ```shell
@@ -44,4 +47,4 @@ kube-public    Active    33m
 kube-system    Active    33m
 ```
 
-You're done! :)
+You're done! :slightly_smiling_face::+1:
