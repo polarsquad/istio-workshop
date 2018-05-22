@@ -6,6 +6,7 @@ googleAnalytics = "UA-xxxx-1"
 theme = "hugo-apex-theme"
 pygmentsCodeFences = true
 pygmentsStyle = "dracula"
+enableEmoji = true
 
 [params]
 logo = "https://static1.squarespace.com/static/5a21331232601e557c5feacb/t/5abb77bb562fa7acbffc891e/1522238007350/?format=1500w"
