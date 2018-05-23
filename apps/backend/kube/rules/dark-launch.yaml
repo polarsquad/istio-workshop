@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     name: backend-svc
-  precedence: 2
+  precedence: 3
   match:
     request:
       headers:

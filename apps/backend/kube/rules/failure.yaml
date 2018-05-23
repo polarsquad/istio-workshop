@@ -7,7 +7,7 @@ metadata:
 spec:
   destination:
     name: backend-svc
-  precedence: 3
+  precedence: 5
   httpFault:
     abort:
       percent: 100

@@ -120,6 +120,8 @@ Text:<br/> <textarea name="text"></textarea><br />
 You might see randomly a response with "Version 1" instead of "Version 2" as shown in the listing above. 
 Don't worry, it's expected because _Service_ `selector` selects both versions.
 
+![Routing without Istio](/istio-workshop/img/without-istio.png)
+
 Later in the exercises we use the `$ENDPOINT` in our examples to access the service.
 
 To start controlling the traffic with Istio, first we want to implement the [default routing »]({{< ref "exercise-1-default-routing.md" >}})
