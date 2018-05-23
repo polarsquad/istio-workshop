@@ -60,3 +60,5 @@ workshop $ kubectl apply -f apps/backend/kube/rules/dark-launch.yaml
 ```
 
 When you visit the frontend app, you can now control the backend using the links mentioned before. Try enabling the edge and create a few custom notes!
+
+Looks good? Let's make version 2 the default backend using `kubectl -f apps/backend/kube/rules/default-v2.yaml`, and check out how we can collect some [telemetry data »]({{< ref "exercise-4-telemetry.md" >}}).
