@@ -7,6 +7,8 @@ seriesStart: exercise-3
 
 Istio can also route traffic based on the incoming HTTP. This can be useful for simulating Dark Launches: releasing production-ready features to focused set of users.
 
+![Dark Launch](/istio-workshop/img/dark-launch.png)
+
 In this exercise, we're going to simulate a Dark Launch by controlling backend traffic destination based on the HTTP headers. Specifically, we're going to send backend requests with header `X-Enable-Edge: true` to version 2.
 
 In the frontend, we can control the use of the X-Enable-Edge header using the "Enable edge backend" and "Disable edge backend" link in the frontend app.
