@@ -123,15 +123,16 @@ ${body}
         }));
     });
 
+    app.get('/version', function(req, res) {
+        res.send(version);
+    });
+
     app.get('/:title', function(req, res) {
         getNote(req.params.title, handleResponse(res, function(note) {
             res.send(notePage(note));
         }));
     });
 
-    app.get('/version', function(req, res) {
-        res.send(version);
-    });
 
     app.listen(5000, function() {
         console.log('Frontend app listening on port 5000')
