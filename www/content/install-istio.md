@@ -4,7 +4,7 @@ weight: 25
 menu: true
 ---
 
-Once you have a Kubernetes cluster up and running, you can install istio by running our Istio installation script.
+Once you have a Kubernetes cluster up and running, you can install Istio by running our Istio installation script.
 
 This script will perform the following steps:
 

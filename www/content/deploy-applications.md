@@ -23,11 +23,26 @@ Similarly, the backend app also has two versions. Version 1 has a static greetin
 The YAML file [apps/frontend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/frontend/kube/deployment.yaml) and [apps/backend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/backend/kube/deployment.yaml) in the workshop Git repo contains the resource definitions for our example services. It creates a _Deployment_ per app and version, and exposes all deployments internally as a _Services_. Use `kubectl` to create the _Deployments_ and the _Services_.
 
 ```shell
+workshop $ kubectl apply -f apps/frontend/kube/deployment.yaml
+service "frontend-svc" created
+deployment "frontend-v1" created
+deployment "frontend-v2" created
+```
+
+```shell
+workshop $ kubectl apply -f apps/backend/kube/deployment.yaml
+service "backend-svc" created
+deployment "backend-v1" created
+deployment "backend-v2" created
+```
+
+```shell
 workshop $ kubectl get deployment
 NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-backend-v1    1         1         1            1           1h
-frontend-v1   1         1         1            1           1d
-frontend-v2   1         1         1            1           1d
+backend-v1    1         1         1            1           12s
+backend-v2    1         1         1            1           12s
+frontend-v1   1         1         1            1           31s
+frontend-v2   1         1         1            1           31s
 ```
 
 Next let's add _Ingress_ so we can access it outside.
@@ -99,6 +114,8 @@ Text:<br/> <textarea name="text"></textarea><br />
 <a href="?useEdge=true">Enable edge backend</a>
 </body>
 ```
+
+> You can test the page also through browser `open http://$ENDPOINT`
 
 You might see randomly a response with "Version 1" instead of "Version 2" as shown in the listing above. 
 Don't worry, it's expected because _Service_ `selector` selects both versions.
