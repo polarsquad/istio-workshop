@@ -1,7 +1,7 @@
 baseURL = "https://polarsquad.github.io/istio-workshop/"
 languageCode = "en-us"
 title = "Istio Workshop"
-copyright = "Made with ❤️ by Polar Squad."
+copyright = "Made with ❤️ by Polar Squad. Content on this site is licensed under a Creative Commons license"
 googleAnalytics = "UA-xxxx-1"
 theme = "hugo-apex-theme"
 pygmentsCodeFences = true
