@@ -26,7 +26,16 @@ spec:
 
 ```shell
 workshop $ kubectl create -f apps/frontend/kube/rules/default.yaml
+routerule "frontend-default" created
 ```
+
+And same thing for the backend
+
+```shell
+workshop $ kubectl create -f apps/backend/kube/rules/default.yaml
+routerule "backend-default" created
+```
+
 
 Now we should get constantly "Version 1" response:
 
