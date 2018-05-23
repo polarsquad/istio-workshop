@@ -65,9 +65,23 @@ frontend-ing   *                   80        10s
 ## Access the service
 Now that all _Deployments_ and the _Ingress_ are setup for our example frontend and backend apps, we can access the _Service_ through Istio's own _Ingress_ controller that was created during the Istio setup stage. In a cloud environment, Istio's _Ingress_ controller would be exposed via an external load balancer. Since we're running the setup locally, we'll need to jump a couple of hoops to figure out the endpoint for the Istio _Ingress_.
 
+**On Docker for Mac**:
+
 ```shell
-workshop $ ENDPOINT_HOST=$(kubectl get po -l istio=ingress -n istio-system -o 'jsonpath={.items[0].status.hostIP}')
+workshop $ ENDPOINT_HOST=localhost
+workshop $ ENDPOINT_PORT=80
+```
+
+**On minikube**:
+
+```shell
+workshop $ ENDPOINT_HOST=$(minikube ip)
 workshop $ ENDPOINT_PORT=$(kubectl get svc istio-ingress -n istio-system -o 'jsonpath={.spec.ports[0].nodePort}')
+```
+
+**Common**
+
+```shell
 workshop $ ENDPOINT="http://$ENDPOINT_HOST:$ENDPOINT_PORT"
 workshop $ curl $ENDPOINT
 <html><title>Version 1</title></html>
