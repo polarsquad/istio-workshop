@@ -7,7 +7,9 @@ seriesStart: exercise-3
 
 Istio can also route traffic based on the incoming HTTP. This can be useful for simulating Dark Launches: releasing production-ready features to focused set of users.
 
-In this exercise, we're going to simulate a Dark Launch by controlling backend traffic destination based on the HTTP headers. Specifically, we're going to send requests with header `X-Client-Version: 2` to backend version 2, thus effectively synchronising version 2 frontend with version 2 backend.
+In this exercise, we're going to simulate a Dark Launch by controlling backend traffic destination based on the HTTP headers. Specifically, we're going to send backend requests with header `X-Enable-Edge: true` to version 2.
+
+In the frontend, we can control the use of the X-Enable-Edge header using the "Enable edge backend" and "Disable edge backend" link in the frontend app.
 
 First, make sure that we have a default rule in place for the backend app. We're going to send all backend traffic to version 1 by default.
 
@@ -28,7 +30,7 @@ spec:
 workshop $ kubectl apply -f apps/backend/kube/rules/default.yaml
 ```
 
-Next, we're going to create a rule that is only applied when the header X-Client-Version is 2:
+Then, let's create a rule that is only applied when the header X-Enable-Edge is true:
 
 ```yaml
 apiVersion: config.istio.io/v1alpha2
@@ -42,8 +44,8 @@ spec:
   match:
     request:
       headers:
-        x-client-version:
-          exact: "2"
+        x-enable-edge:
+          exact: "true"
   route:
   - labels:
       version: v2
@@ -55,4 +57,4 @@ If an incoming request doesn't match with the rule, the default rule will be use
 workshop $ kubectl apply -f apps/backend/kube/rules/dark-launch.yaml
 ```
 
-When you visit the frontend page, you should now see the default greeting appear only for version 1 of the page.
+When you visit the frontend app, you can now control the backend using the links mentioned before. Try enabling the edge and create a few custom notes!

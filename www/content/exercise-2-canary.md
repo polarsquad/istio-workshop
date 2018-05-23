@@ -52,8 +52,10 @@ workshop $ curl $ENDPOINT
 <form action="/" method="post">
 Title:<br/> <input type="text" name="title" /><br />
 Text:<br/> <textarea name="text"></textarea><br />
+<input type="hidden" name="useEdge" value="false" />
 <input type="submit" value="Submit" />
 </form>
+<a href="?useEdge=true">Enable edge backend</a>
 </body>
 ```
 

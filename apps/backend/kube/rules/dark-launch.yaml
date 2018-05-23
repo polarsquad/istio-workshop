@@ -9,8 +9,8 @@ spec:
   match:
     request:
       headers:
-        x-client-version:
-          exact: "2"
+        x-enable-edge:
+          exact: "true"
   route:
   - labels:
       version: v2
