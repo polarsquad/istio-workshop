@@ -1,0 +1,14 @@
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: backend-delay
+  labels:
+    exercise: fault-injection
+spec:
+  destination:
+    name: backend-svc
+  precedence: 2
+  httpFault:
+    delay:
+      percent: 100
+      fixedDelay: 10s

@@ -46,3 +46,5 @@ Next generate some traffic to the frontend:
 You should see in the dashboard some basic information about the traffic
 
 ![Grafana dashboard](/istio-workshop/img/grafana-dashboard-screenshot.png)
+
+Now you have some basic monitoring, in next step we want to simulate some error cases by [injecting failures »]({{< ref "exercise-5-fault.md" >}})
