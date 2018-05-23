@@ -14,9 +14,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/:title', function(req, res) {
-    const item = data[req.params.title];
+    const title = req.params.title;
+    const item = data.find((a) => a.title === title);
     if (item) {
-        res.json(itemToResponse(item));
+        res.json(item);
     } else {
         res.status(404);
         res.json({message: 'not found'})
