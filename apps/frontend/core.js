@@ -17,53 +17,58 @@ const backendHost = getEnv('BACKEND_HOST');
 const backendPort = getEnv('BACKEND_PORT', 6000);
 const backendUrl = `http://${backendHost}:${backendPort}`;
 
-const noteForm = `
+function noteForm(useEdge) {
+    const useEdgeText = useEdge ? "true" : "false";
+    return `
 <form action="/" method="post">
 Title:<br/> <input type="text" name="title" /><br />
 Text:<br/> <textarea name="text"></textarea><br />
+<input type="hidden" name="useEdge" value="${useEdgeText}" />
 <input type="submit" value="Submit" />
-</form>`;
+</form>
+`;
+}
 
 function start(version, siteColor) {
     const titleText = `<title>Version ${version}</title>`;
     const headingText = `<h1 style="background-color: ${siteColor}; color: white">Version ${version}</h1>`;
 
-    function getNoteTitles(callback) {
+    function getNoteTitles(useEdge=false, callback) {
         return request(
             {
                 method: 'GET',
                 uri: backendUrl,
                 json: true,
                 headers: {
-                    'X-Client-Version': version
+                    'X-Enable-Edge': useEdge
                 }
             },
             callback
         );
     }
 
-    function getNote(title, callback) {
+    function getNote(title, useEdge=false, callback) {
         return request(
             {
                 method: 'GET',
                 uri: `${backendUrl}/${title}`,
                 json: true,
                 headers: {
-                    'X-Client-Version': version
+                    'X-Enable-Edge': useEdge
                 }
             },
             callback
         );
     }
 
-    function storeNote(title, text, callback) {
+    function storeNote(title, text, useEdge=false, callback) {
         return request(
             {
                 method: 'POST',
                 uri: `${backendUrl}/${title}`,
                 headers: {
                     'Content-Type': 'text/plain',
-                    'X-Client-Version': version
+                    'X-Enable-Edge': useEdge
                 },
                 body: text
             },
@@ -80,19 +85,26 @@ ${body}
 `;
     }
 
+    function edgeAddOn(useEdge) {
+        return useEdge ? '?useEdge=true' : '';
+    }
+
     function failPage(message) {
         return template(`<p style="color: red">Error: ${message}</p>`);
     }
 
-    function indexPage(noteTitles) {
+    function indexPage(noteTitles, useEdge=false) {
+        const edgeLink = useEdge ? '<a href="/">Disable edge backend</a>' : '<a href="?useEdge=true">Enable edge backend</a>';
         const renderedTitles = noteTitles
-            .map((title) => `<li><a href="/${title}">${title}</a></li>`)
+            .map((title) => `<li><a href="/${title}${edgeAddOn(useEdge)}">${title}</a></li>`)
             .join('\n');
-        return template(`<ul>${renderedTitles}</ul>${noteForm}`);
+        return template(`<ul>${renderedTitles}</ul>${noteForm(useEdge)}${edgeLink}`);
     }
 
-    function notePage(note) {
-        return template(`<h2>${note.title}</h2> <pre>${note.text}</pre> <a href="/">Go back</a>`);
+    function notePage(note, useEdge=false) {
+        return template(
+            `<h2>${note.title}</h2> <pre>${note.text}</pre> <a href="/${edgeAddOn(useEdge)}">Go back</a>`
+        );
     }
 
     function handleResponse(res, callback) {
@@ -109,17 +121,21 @@ ${body}
         };
     }
 
-    function getRoot(req, res) {
-        getNoteTitles(handleResponse(res, function(body) {
-            res.send(indexPage(body))
+    function getRoot(req, res, useEdge) {
+        getNoteTitles(useEdge, handleResponse(res, function(body) {
+            res.send(indexPage(body, useEdge))
         }));
     }
 
-    app.get('/', getRoot);
+    app.get('/', function(req, res) {
+        const useEdge = req.query.useEdge || false;
+        getRoot(req, res, useEdge);
+    });
 
     app.post('/', bodyParser.urlencoded({extended: false}), function(req, res) {
-        storeNote(req.body.title, req.body.text, handleResponse(res, function(body) {
-            getRoot(req, res);
+        const useEdge = req.body.useEdge || false;
+        storeNote(req.body.title, req.body.text, req.body.useEdge || false, handleResponse(res, function(body) {
+            getRoot(req, res, useEdge);
         }));
     });
 
@@ -128,8 +144,9 @@ ${body}
     });
 
     app.get('/:title', function(req, res) {
-        getNote(req.params.title, handleResponse(res, function(note) {
-            res.send(notePage(note));
+        const useEdge = req.query.useEdge || false;
+        getNote(req.params.title, useEdge, handleResponse(res, function(note) {
+            res.send(notePage(note, useEdge));
         }));
     });
 

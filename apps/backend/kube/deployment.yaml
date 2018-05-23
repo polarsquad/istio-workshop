@@ -36,3 +36,25 @@ spec:
         ports:
         - containerPort: 6000
 ---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend-v2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: v2
+    spec:
+      containers:
+      - name: backend
+        image: polarsquad/example-backend:v2
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: 6000

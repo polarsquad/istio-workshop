@@ -9,6 +9,9 @@ const app = express();
 const db = new loki('loki.json');
 const stuff = db.addCollection('stuff');
 
+// Other
+const version = '2';
+
 function getByTitle(title) {
     return stuff.find({title: title})[0];
 }
@@ -38,6 +41,10 @@ function itemToResponse(item) {
 
 app.get('/', function(req, res) {
     res.json(getTitles());
+});
+
+app.get('/version', function(req, res) {
+    res.send(version);
 });
 
 app.get('/:title', function(req, res) {

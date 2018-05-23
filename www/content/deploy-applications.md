@@ -16,6 +16,8 @@ The frontend app launches an HTTP server that lists notes stored in the backend 
 
 The frontend app source code is split into two versions: `app_v1.js` for version 1 and `app_v2.js` for version 2. We'll later run both versions of the app simultaneously to demonstrate Istio's traffic routing capabilities.
 
+Similarly, the backend app also has two versions. Version 1 has a static greeting note, and the version 2 allows adding custom notes.
+
 ## Deploying to Kubernetes
 
 The YAML file [apps/frontend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/frontend/kube/deployment.yaml) and [apps/backend/kube/deployment.yaml](https://github.com/polarsquad/istio-workshop/tree/master/apps/backend/kube/deployment.yaml) in the workshop Git repo contains the resource definitions for our example services. It creates a _Deployment_ per app and version, and exposes all deployments internally as a _Services_. Use `kubectl` to create the _Deployments_ and the _Services_.
@@ -87,12 +89,14 @@ workshop $ curl $ENDPOINT
 <html><title>Version 1</title></html>
 <body>
 <h1 style="background-color: blue; color: white">Version 1</h1>
-<ul></ul>
+<ul><li><a href="/greetings">greetings</a></li></ul>
 <form action="/" method="post">
 Title:<br/> <input type="text" name="title" /><br />
 Text:<br/> <textarea name="text"></textarea><br />
+<input type="hidden" name="useEdge" value="false" />
 <input type="submit" value="Submit" />
 </form>
+<a href="?useEdge=true">Enable edge backend</a>
 </body>
 ```
 
