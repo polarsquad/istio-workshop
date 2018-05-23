@@ -13,6 +13,10 @@ app.get('/', function(req, res) {
     res.json(data.map((o) => o.title));
 });
 
+app.get('/version', function(req, res) {
+    res.send(version);
+});
+
 app.get('/:title', function(req, res) {
     const title = req.params.title;
     const item = data.find((a) => a.title === title);
@@ -27,10 +31,6 @@ app.get('/:title', function(req, res) {
 app.post('/:title', function(req, res) {
     res.status(501);
     res.json({message: 'unsupported'});
-});
-
-app.get('/version', function(req, res) {
-    res.send(version);
 });
 
 app.listen(6000, function() {

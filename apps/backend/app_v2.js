@@ -43,6 +43,10 @@ app.get('/', function(req, res) {
     res.json(getTitles());
 });
 
+app.get('/version', function(req, res) {
+    res.send(version);
+});
+
 app.get('/:title', function(req, res) {
     const item = getByTitle(req.params.title);
     if (item) {
@@ -61,10 +65,6 @@ app.post('/:title', bodyParser.text(), function(req, res) {
         res.status(400);
         res.json({message: 'missing text'});
     }
-});
-
-app.get('/version', function(req, res) {
-    res.send(version);
 });
 
 app.listen(6000, function() {
